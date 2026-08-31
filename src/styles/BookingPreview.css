@@ -1,0 +1,148 @@
+.booking-preview {
+  padding: 6rem 2rem;
+  background: #0E0E0F;
+  border-bottom: 1px solid rgba(155, 160, 171, 0.15);
+}
+
+.booking-preview-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.booking-preview-container h2 {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 700;
+  color: #F0F4F5;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.booking-preview-card {
+  background: linear-gradient(135deg, rgba(57, 0, 7, 0.1) 0%, rgba(26, 26, 27, 0.5) 100%);
+  border: 1px solid rgba(57, 0, 7, 0.3);
+  border-radius: 4px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.booking-calendar h3,
+.booking-times h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #F0F4F5;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.date-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.date-button {
+  background: transparent;
+  border: 1px solid rgba(155, 160, 171, 0.2);
+  border-radius: 4px;
+  padding: 0.75rem;
+  color: #F0F4F5;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+
+  &:hover {
+    border-color: #390007;
+    background: rgba(57, 0, 7, 0.1);
+  }
+
+  &.selected {
+    background: #390007;
+    border-color: #390007;
+    color: #F0F4F5;
+  }
+}
+
+.date-button .day {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #9BA0AB;
+}
+
+.date-button.selected .day {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.date-button .date {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+}
+
+.booking-times {
+  margin-bottom: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(155, 160, 171, 0.15);
+  animation: slideDown 0.3s ease-out;
+}
+
+.time-slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 0.75rem;
+}
+
+.time-slot {
+  background: transparent;
+  border: 1px solid rgba(155, 160, 171, 0.2);
+  color: #F0F4F5;
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: #390007;
+    background: rgba(57, 0, 7, 0.1);
+  }
+}
+
+.booking-cta {
+  width: 100%;
+  background: #390007;
+  color: #F0F4F5;
+  border: 1px solid #390007;
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #7A1120;
+    border-color: #7A1120;
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
