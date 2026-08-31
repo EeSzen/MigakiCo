@@ -1,11 +1,11 @@
-import { type FormEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { supabase } from '../../lib/supabase';
+import { type FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../../lib/supabase";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -14,24 +14,26 @@ export default function AdminLogin() {
     setLoading(true);
     setError(null);
 
-    const { data, error: signInError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { data, error: signInError } = await supabase.auth.signInWithPassword(
+      {
+        email,
+        password,
+      },
+    );
 
     setLoading(false);
 
     if (signInError) {
-      setError(signInError.message || 'Unable to sign in.');
+      setError(signInError.message || "Unable to sign in.");
       return;
     }
 
     if (!data.user) {
-      setError('No active session returned.');
+      setError("No active session returned.");
       return;
     }
 
-    navigate('/admin/bookings', { replace: true });
+    navigate("/admin/bookings", { replace: true });
   }
 
   return (
@@ -67,8 +69,12 @@ export default function AdminLogin() {
 
           {error && <p className="admin-login-error">{error}</p>}
 
-          <button type="submit" disabled={loading} className="admin-login-button">
-            {loading ? 'Signing in...' : 'Sign in'}
+          <button
+            type="submit"
+            disabled={loading}
+            className="admin-login-button"
+          >
+            {loading ? "Signing in..." : "Sign in"}
           </button>
         </form>
       </div>

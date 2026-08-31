@@ -21,7 +21,7 @@ export const Hero: React.FC<HeroProps> = ({ onBookClick, onViewServices }) => {
           Precision detailing, quietly applied. Appointment-only service for the discerning motorcycle owner.
         </p>
 
-        <div className="hero-ctas">
+        <div className="hero-ctas pb-7">
           <button className="cta-primary" onClick={onBookClick}>
             Book Now
           </button>
