@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { useEffect, useState } from "react";
+import { supabase } from "../../lib/supabase";
 
 interface Booking {
   id: string;
@@ -12,7 +12,7 @@ interface BookingPhoto {
   id: string;
   booking_id: string;
   url: string;
-  type: 'before' | 'after';
+  type: "before" | "after";
   uploaded_at: string;
 }
 
@@ -22,7 +22,7 @@ export default function AdminPhotos() {
   const [loading, setLoading] = useState(true);
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [photoType, setPhotoType] = useState<'before' | 'after'>('before');
+  const [photoType, setPhotoType] = useState<"before" | "after">("before");
 
   useEffect(() => {
     fetchCompletedBookings();
@@ -32,15 +32,15 @@ export default function AdminPhotos() {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('bookings')
-        .select('id, customer_name, bike_model, scheduled_at')
-        .eq('status', 'completed')
-        .order('scheduled_at', { ascending: false });
+        .from("bookings")
+        .select("id, customer_name, bike_model, scheduled_at")
+        .eq("status", "completed")
+        .order("scheduled_at", { ascending: false });
 
       if (error) throw error;
       setCompletedBookings(data || []);
     } catch (error) {
-      console.error('Error fetching completed bookings:', error);
+      console.error("Error fetching completed bookings:", error);
     } finally {
       setLoading(false);
     }
@@ -49,15 +49,15 @@ export default function AdminPhotos() {
   async function fetchPhotosForBooking(bookingId: string) {
     try {
       const { data, error } = await supabase
-        .from('booking_photos')
-        .select('*')
-        .eq('booking_id', bookingId)
-        .order('type', { ascending: true });
+        .from("booking_photos")
+        .select("*")
+        .eq("booking_id", bookingId)
+        .order("type", { ascending: true });
 
       if (error) throw error;
       setPhotos(data || []);
     } catch (error) {
-      console.error('Error fetching photos:', error);
+      console.error("Error fetching photos:", error);
     }
   }
 
@@ -77,19 +77,19 @@ export default function AdminPhotos() {
 
       // Upload to Supabase Storage
       const { error: uploadError } = await supabase.storage
-        .from('photos')
+        .from("photos")
         .upload(filepath, file);
 
       if (uploadError) throw uploadError;
 
       // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('photos')
-        .getPublicUrl(filepath);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from("photos").getPublicUrl(filepath);
 
       // Insert photo record
       const { error: insertError } = await supabase
-        .from('booking_photos')
+        .from("booking_photos")
         .insert([
           {
             booking_id: selectedBooking.id,
@@ -104,22 +104,22 @@ export default function AdminPhotos() {
       fetchPhotosForBooking(selectedBooking.id);
 
       // Reset input
-      e.target.value = '';
+      e.target.value = "";
     } catch (error) {
-      console.error('Error uploading photo:', error);
+      console.error("Error uploading photo:", error);
     } finally {
       setUploading(false);
     }
   }
 
   async function deletePhoto(photoId: string) {
-    if (!window.confirm('Delete this photo?')) return;
+    if (!window.confirm("Delete this photo?")) return;
 
     try {
       const { error } = await supabase
-        .from('booking_photos')
+        .from("booking_photos")
         .delete()
-        .eq('id', photoId);
+        .eq("id", photoId);
 
       if (error) throw error;
 
@@ -127,7 +127,7 @@ export default function AdminPhotos() {
         fetchPhotosForBooking(selectedBooking.id);
       }
     } catch (error) {
-      console.error('Error deleting photo:', error);
+      console.error("Error deleting photo:", error);
     }
   }
 
@@ -148,7 +148,7 @@ export default function AdminPhotos() {
               {completedBookings.map((booking) => (
                 <button
                   key={booking.id}
-                  className={`booking-item ${selectedBooking?.id === booking.id ? 'active' : ''}`}
+                  className={`booking-item ${selectedBooking?.id === booking.id ? "active" : ""}`}
                   onClick={() => {
                     setSelectedBooking(booking);
                     fetchPhotosForBooking(booking.id);
@@ -159,7 +159,7 @@ export default function AdminPhotos() {
                     <p className="model">{booking.bike_model}</p>
                   </div>
                   <p className="date">
-                    {new Date(booking.scheduled_at).toLocaleDateString('en-MY')}
+                    {new Date(booking.scheduled_at).toLocaleDateString("en-MY")}
                   </p>
                 </button>
               ))}
@@ -176,7 +176,9 @@ export default function AdminPhotos() {
             <div className="upload-form">
               <select
                 value={photoType}
-                onChange={(e) => setPhotoType(e.target.value as 'before' | 'after')}
+                onChange={(e) =>
+                  setPhotoType(e.target.value as "before" | "after")
+                }
               >
                 <option value="before">Before</option>
                 <option value="after">After</option>
@@ -188,23 +190,30 @@ export default function AdminPhotos() {
                   accept="image/*"
                   onChange={handlePhotoUpload}
                   disabled={uploading}
-                  style={{ display: 'none' }}
+                  style={{ display: "none" }}
                 />
-                {uploading ? 'Uploading...' : 'Choose Photo'}
+                {uploading ? "Uploading..." : "Choose Photo"}
               </label>
             </div>
 
             {/* Photos Grid */}
             {photos.length === 0 ? (
-              <p className="no-data">No photos yet. Upload before/after images.</p>
+              <p className="no-data">
+                No photos yet. Upload before/after images.
+              </p>
             ) : (
               <div className="photos-grid">
                 {photos.map((photo) => (
-                  <div key={photo.id} className={`photo-card type-${photo.type}`}>
-                    <div className="photo-type-label">{photo.type.toUpperCase()}</div>
+                  <div
+                    key={photo.id}
+                    className={`photo-card type-${photo.type}`}
+                  >
+                    <div className="photo-type-label">
+                      {photo.type.toUpperCase()}
+                    </div>
                     <img src={photo.url} alt={`${photo.type} photo`} />
                     <div className="photo-date">
-                      {new Date(photo.uploaded_at).toLocaleString('en-MY')}
+                      {new Date(photo.uploaded_at).toLocaleString("en-MY")}
                     </div>
                     <button
                       className="btn-delete"
@@ -221,7 +230,9 @@ export default function AdminPhotos() {
 
         {!selectedBooking && !loading && (
           <div className="photos-main">
-            <p className="no-data">Select a completed booking to manage photos.</p>
+            <p className="no-data">
+              Select a completed booking to manage photos.
+            </p>
           </div>
         )}
       </div>

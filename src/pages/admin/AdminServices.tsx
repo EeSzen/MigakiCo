@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { useEffect, useState } from "react";
+import { supabase } from "../../lib/supabase";
 
 interface Service {
   id: string;
@@ -17,10 +17,10 @@ export default function AdminServices() {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    price: '',
-    duration_minutes: '60',
+    name: "",
+    description: "",
+    price: "",
+    duration_minutes: "60",
     is_active: true,
   });
 
@@ -32,14 +32,14 @@ export default function AdminServices() {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('services')
-        .select('*')
-        .order('name', { ascending: true });
+        .from("services")
+        .select("*")
+        .order("name", { ascending: true });
 
       if (error) throw error;
       setServices(data || []);
     } catch (error) {
-      console.error('Error fetching services:', error);
+      console.error("Error fetching services:", error);
     } finally {
       setLoading(false);
     }
@@ -47,10 +47,10 @@ export default function AdminServices() {
 
   function resetForm() {
     setFormData({
-      name: '',
-      description: '',
-      price: '',
-      duration_minutes: '60',
+      name: "",
+      description: "",
+      price: "",
+      duration_minutes: "60",
       is_active: true,
     });
     setEditingId(null);
@@ -59,7 +59,7 @@ export default function AdminServices() {
   function handleEdit(service: Service) {
     setFormData({
       name: service.name,
-      description: service.description || '',
+      description: service.description || "",
       price: service.price.toString(),
       duration_minutes: service.duration_minutes.toString(),
       is_active: service.is_active,
@@ -83,16 +83,14 @@ export default function AdminServices() {
       if (editingId) {
         // Update
         const { error } = await supabase
-          .from('services')
+          .from("services")
           .update(serviceData)
-          .eq('id', editingId);
+          .eq("id", editingId);
 
         if (error) throw error;
       } else {
         // Insert
-        const { error } = await supabase
-          .from('services')
-          .insert([serviceData]);
+        const { error } = await supabase.from("services").insert([serviceData]);
 
         if (error) throw error;
       }
@@ -101,37 +99,34 @@ export default function AdminServices() {
       setShowForm(false);
       resetForm();
     } catch (error) {
-      console.error('Error saving service:', error);
+      console.error("Error saving service:", error);
     }
   }
 
   async function handleDelete(id: string) {
-    if (!window.confirm('Delete this service?')) return;
+    if (!window.confirm("Delete this service?")) return;
 
     try {
-      const { error } = await supabase
-        .from('services')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from("services").delete().eq("id", id);
 
       if (error) throw error;
       fetchServices();
     } catch (error) {
-      console.error('Error deleting service:', error);
+      console.error("Error deleting service:", error);
     }
   }
 
   async function toggleActive(service: Service) {
     try {
       const { error } = await supabase
-        .from('services')
+        .from("services")
         .update({ is_active: !service.is_active })
-        .eq('id', service.id);
+        .eq("id", service.id);
 
       if (error) throw error;
       fetchServices();
     } catch (error) {
-      console.error('Error toggling service:', error);
+      console.error("Error toggling service:", error);
     }
   }
 
@@ -139,11 +134,14 @@ export default function AdminServices() {
     <div className="admin-services">
       <div className="services-header">
         <h1>Services Management</h1>
-        <button className="btn-primary" onClick={() => {
-          resetForm();
-          setShowForm(!showForm);
-        }}>
-          {showForm ? 'Cancel' : '+ Add Service'}
+        <button
+          className="btn-primary"
+          onClick={() => {
+            resetForm();
+            setShowForm(!showForm);
+          }}
+        >
+          {showForm ? "Cancel" : "+ Add Service"}
         </button>
       </div>
 
@@ -154,7 +152,9 @@ export default function AdminServices() {
             <input
               type="text"
               value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
               required
               placeholder="e.g., Basic Wash"
             />
@@ -164,7 +164,9 @@ export default function AdminServices() {
             <label>Description</label>
             <textarea
               value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
               placeholder="Service details..."
               rows={3}
             />
@@ -177,7 +179,9 @@ export default function AdminServices() {
                 type="number"
                 step="0.01"
                 value={formData.price}
-                onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, price: e.target.value })
+                }
                 required
                 placeholder="50.00"
               />
@@ -188,7 +192,9 @@ export default function AdminServices() {
               <input
                 type="number"
                 value={formData.duration_minutes}
-                onChange={(e) => setFormData({ ...formData, duration_minutes: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, duration_minutes: e.target.value })
+                }
                 required
               />
             </div>
@@ -199,14 +205,16 @@ export default function AdminServices() {
               <input
                 type="checkbox"
                 checked={formData.is_active}
-                onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
+                onChange={(e) =>
+                  setFormData({ ...formData, is_active: e.target.checked })
+                }
               />
               Active
             </label>
           </div>
 
           <button type="submit" className="btn-primary">
-            {editingId ? 'Update Service' : 'Add Service'}
+            {editingId ? "Update Service" : "Add Service"}
           </button>
         </form>
       )}
@@ -214,15 +222,22 @@ export default function AdminServices() {
       {loading ? (
         <p>Loading services...</p>
       ) : services.length === 0 ? (
-        <p className="no-data">No services yet. Create one to start taking bookings.</p>
+        <p className="no-data">
+          No services yet. Create one to start taking bookings.
+        </p>
       ) : (
         <div className="services-grid">
           {services.map((service) => (
-            <div key={service.id} className={`service-card ${!service.is_active ? 'inactive' : ''}`}>
+            <div
+              key={service.id}
+              className={`service-card ${!service.is_active ? "inactive" : ""}`}
+            >
               <div className="service-header">
                 <h3>{service.name}</h3>
-                <span className={`active-badge ${service.is_active ? 'active' : 'inactive'}`}>
-                  {service.is_active ? 'Active' : 'Inactive'}
+                <span
+                  className={`active-badge ${service.is_active ? "active" : "inactive"}`}
+                >
+                  {service.is_active ? "Active" : "Inactive"}
                 </span>
               </div>
 
@@ -231,8 +246,12 @@ export default function AdminServices() {
               )}
 
               <div className="service-details">
-                <p><strong>Price:</strong> RM {service.price.toFixed(2)}</p>
-                <p><strong>Duration:</strong> {service.duration_minutes} min</p>
+                <p>
+                  <strong>Price:</strong> RM {service.price.toFixed(2)}
+                </p>
+                <p>
+                  <strong>Duration:</strong> {service.duration_minutes} min
+                </p>
               </div>
 
               <div className="service-actions">
@@ -243,10 +262,10 @@ export default function AdminServices() {
                   Edit
                 </button>
                 <button
-                  className={`btn-toggle ${service.is_active ? 'deactivate' : 'activate'}`}
+                  className={`btn-toggle ${service.is_active ? "deactivate" : "activate"}`}
                   onClick={() => toggleActive(service)}
                 >
-                  {service.is_active ? 'Deactivate' : 'Activate'}
+                  {service.is_active ? "Deactivate" : "Activate"}
                 </button>
                 <button
                   className="btn-delete"

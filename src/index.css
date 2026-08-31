@@ -1,32 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
-@import 'tailwindcss';
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
+@import "tailwindcss";
 
 :root {
-  --background: 240 5% 6%;
-  --foreground: 200 17% 95%;
-  --card: 240 5% 10%;
-  --card-foreground: 200 17% 95%;
-  --popover: 240 5% 10%;
-  --popover-foreground: 200 17% 95%;
-  --primary: 353 100% 14%;
-  --primary-foreground: 200 17% 95%;
-  --secondary: 240 5% 10%;
-  --secondary-foreground: 200 17% 95%;
-  --muted: 240 5% 10%;
-  --muted-foreground: 220 8% 68%;
-  --accent: 353 100% 14%;
-  --accent-foreground: 200 17% 95%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 220 8% 68%;
-  --input: 220 8% 68%;
-  --ring: 220 8% 68%;
-  --radius: 0.75rem;
+  --bg-primary: #0e0e0f;
+  --accent: #390007;
+  --accent-bright: #7a1120;
+  --surface: #1a1a1b;
+  --text-primary: #f0f4f5;
+  --text-secondary: #9ba0ab;
+  --border: rgba(155, 160, 171, 0.15);
 
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   color-scheme: dark;
-  color: hsl(var(--foreground));
-  background: hsl(var(--background));
+  color: var(--text-primary);
+  background: var(--bg-primary);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -44,8 +31,8 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background: hsl(var(--background));
-  color: hsl(var(--foreground));
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 h1,
@@ -54,7 +41,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   margin: 0;
   line-height: 1.2;
 }
@@ -78,48 +65,49 @@ p {
   margin: 0;
   line-height: 1.6;
   font-size: 16px;
-  color: hsl(var(--foreground));
+  color: var(--text-primary);
 }
 
 button {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   cursor: pointer;
   border: none;
   transition: all 0.3s ease;
 }
 
 a {
-  color: hsl(var(--foreground));
+  color: var(--text-primary);
   text-decoration: none;
   transition: all 0.3s ease;
 }
 
+/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(var(--background));
+  background: var(--bg-primary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary));
+  background: var(--accent);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--accent));
+  background: var(--accent-bright);
 }
 
 #root {
   width: 100%;
   min-height: 100vh;
-  background: hsl(var(--background));
+  background: var(--bg-primary);
 }
 
 code {
   font-size: 15px;
   line-height: 135%;
   padding: 4px 8px;
-  background: rgba(155, 160, 171, 0.12);
+  background: var(--code-bg);
 }
