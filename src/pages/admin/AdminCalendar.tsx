@@ -522,8 +522,8 @@ export default function AdminCalendar() {
                 </div>
                 <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7">
                   {TIME_CHIPS.map((time) => {
-                    const isStart = rangeStart === time;
-                    const isEnd = rangeEnd === time;
+                    // const isStart = rangeStart === time;
+                    // const isEnd = rangeEnd === time;
 
                     const inRange =
                       rangeStart &&
